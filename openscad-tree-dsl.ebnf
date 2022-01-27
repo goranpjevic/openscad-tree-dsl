@@ -1,0 +1,29 @@
+TreeModelLang → 'tree' String ':' 'type' Type ('leaves:' Leaves)?
+                ('ground_fruit:' GroundFruit)? 'color' Color 'size' Number
+                ('roots' EnableDisable)? 'branch:' Branch 'branch_levels'
+                Number
+Type → 'apple' | 'coconut' | 'tree'
+Leaves → EnableDisable 'rotation:' LeavesRotation 'fruit:' LeavesFruit 'color'
+         Color
+LeavesRotation → 'x' Value 'y' Value 'z' Value
+LeavesFruit → EnableDisable 'positionRange' Value 'amount' Value 'color'
+              Color
+Color → 'burlywood' | 'saddlebrown' | 'green' | 'sienna' | 'red' | 'brown' |
+        'tan'
+GroundFruit → EnableDisable 'color' Color
+EnableDisable → 'enable' | 'disable'
+Branch → 'numberOfBranches' Number 'width' Number 'scale' Value 'rotation:'
+         BranchRotation
+BranchRotation → 'x' Value 'y' Value
+Value → Number | MinMax
+MinMax → ':' 'min' Number 'max' Number
+String → '"' Letter+ '"'
+Letter →  'a' | 'b' | 'c' | 'd' | 'e' | 'f' | 'g' | 'h' | 'i' | 'j' | 'k' | 'l'
+          | 'm' | 'n' | 'o' | 'p' | 'q' | 'r' | 's' | 't' | 'u' | 'v' | 'w' |
+          'x' | 'y' | 'z' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H' | 'I'
+          | 'J' | 'K' | 'L' | 'M' | 'N' | 'O' | 'P' | 'Q' | 'R' | 'S' | 'T' |
+          'U' | 'V' | 'W' | 'X' | 'Y' | 'Z'
+Number → Integer | Float
+Integer → Digit+
+Float → Digit+ '.' Digit+
+Digit →  '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9'

@@ -1,0 +1,29 @@
+tree my_tree3:
+  type fir
+  leaves:
+    enable
+    rotation:
+      x 100
+      y 10
+      z 0
+    fruit:
+      enable
+      positionRange 20
+      amount 15
+      color red
+    color green
+  color brown
+  size 50
+  roots enable
+  branch:
+    numberOfBranches 5
+    width 13
+    scale 1
+    rotation:
+      x:
+        min 1
+        max 2
+      y:
+        min 0
+        max 180
+  branchLevels 5

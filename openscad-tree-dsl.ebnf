@@ -1,6 +1,6 @@
 TreeModelLang → 'tree' String ':' 'type' Type ('leaves:' Leaves)?
-                ('ground_fruit:' GroundFruit)? 'color' Color 'size' Number
-                ('roots' EnableDisable)? 'branch:' Branch 'branch_levels'
+                ('groundFruit:' GroundFruit)? 'color' Color 'size' Number
+                ('roots' EnableDisable)? 'branch:' Branch 'branchLevels'
                 Number
 Type → 'apple' | 'coconut' | 'tree'
 Leaves → EnableDisable 'rotation:' LeavesRotation 'fruit:' LeavesFruit 'color'

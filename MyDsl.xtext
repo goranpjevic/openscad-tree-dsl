@@ -1,0 +1,50 @@
+grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
+
+generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
+
+/*
+Model:
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
+*/
+	
+Model:
+	'tree' (id=ID) ':' ('type' type=Type) & ('leaves:' leaves=Leaves)?
+	& ("groundFruit:" groundFruit=GroundFruit)? & ('color' color=Color)
+	& ('size' size=Number) & ('roots' roots=EnableDisable)? &
+	('branch:' branch=Branch) & ('branchLevels' branchLevels=Number);
+Type:
+	'apple' | 'coconut' | 'fir';
+Leaves:
+	(enableDisableLeaves=EnableDisable) & ('rotation:'
+	leavesRotation=LeavesRotation) & ('fruit:' leavesFruit=LeavesFruit)
+	& ('color' leavesColor=Color);
+LeavesRotation:
+	('x' xLeavesRotationValue=Value) & ('y' yLeavesRotationValue=Value)
+	('z' & zLeavesRotationValue=Value);
+LeavesFruit:
+	(enableDisableFruit=EnableDisable) & ('positionRange'
+	leavesFruitPositionRange=Value) & ('amount'
+	leavesFruitAmount=Value) & ('color' leavesFruitColor=Color);
+Color:
+	'burlywood' | 'saddlebrown' | 'green' | 'sienna' | 'red' | 'brown'
+	| 'tan';
+GroundFruit:
+	(enableDisableGroundFruit=EnableDisable) & ('color'
+	groundFruitColor=Color);
+EnableDisable:
+	'enable' | 'disable';
+Branch:
+	('numberOfBranches' numberOfBranches=Number) & ('width'
+	branchWidth=Number) & ('scale' branchScale=Value) & ('rotation:'
+	branchRotation=BranchRotation);
+BranchRotation:
+	('x' xBranchRotation=Value) & ('y' yBranchRotation=Value);
+Value:
+	(val=Number) | (minMax=MinMax);
+MinMax:
+	':' ('min' min=Number) & ('max' max=Number);
+Number:
+	(v=INT) | (c=INT '.' d=INT);

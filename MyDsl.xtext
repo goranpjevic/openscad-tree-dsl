@@ -2,11 +2,19 @@ grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
 
 generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
 
+/*
 Model:
-	'tree' (id=ID) ':' ('type' type=Type) & ('leaves:' leaves=Leaves)?
+	greetings+=Greeting*;
+	
+Greeting:
+	'Hello' name=ID '!';
+*/
+	
+Model: {Tree}
+	'tree' (id=ID) ':' (('type' type=Type) & ('leaves:' leaves=Leaves)?
 	& ("groundFruit:" groundFruit=GroundFruit)? & ('color' color=Color)
 	& ('size' size=Number) & ('roots' roots=EnableDisable)? &
-	('branch:' branch=Branch) & ('branchLevels' branchLevels=Number);
+	('branch:' branch=Branch) & ('branchLevels' branchLevels=Number));
 Type:
 	'apple' | 'coconut' | 'fir';
 Leaves:

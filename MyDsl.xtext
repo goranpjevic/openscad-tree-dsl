@@ -10,11 +10,13 @@ Greeting:
 	'Hello' name=ID '!';
 */
 	
+
 Model: {Tree}
 	'tree' (id=ID) ':' (('type' type=Type) & ('leaves:' leaves=Leaves)?
 	& ("groundFruit:" groundFruit=GroundFruit)? & ('color' color=Color)
-	& ('size' size=Number) & ('roots' roots=EnableDisable)? &
-	('branch:' branch=Branch) & ('branchLevels' branchLevels=Number));
+	& ('size' size=STRING) & ('roots' roots=EnableDisable)? &
+	('branch:' branch=Branch) & ('branchLevels' branchLevels=STRING) &
+	('treeWidthScale:' treeWidthScale=Value)?);
 Type:
 	'apple' | 'coconut' | 'fir';
 Leaves:
@@ -33,18 +35,16 @@ Color:
 	| 'tan';
 GroundFruit:
 	(enableDisableGroundFruit=EnableDisable) & ('color'
-	groundFruitColor=Color);
+	groundFruitColor=Color) & ('amount' groundFruitAmount=STRING);
 EnableDisable:
 	'enable' | 'disable';
 Branch:
-	('numberOfBranches' numberOfBranches=Number) & ('width'
-	branchWidth=Number) & ('scale' branchScale=Value) & ('rotation:'
+	('numberOfBranches' numberOfBranches=STRING) & ('width'
+	branchWidth=Value) & ('scale' branchScale=Value) & ('rotation:'
 	branchRotation=BranchRotation);
 BranchRotation:
 	('x' xBranchRotation=Value) & ('y' yBranchRotation=Value);
 Value:
-	(val=Number) | (minMax=MinMax);
+	(minMax=MinMax);
 MinMax:
-	':' ('min' min=Number) & ('max' max=Number);
-Number:
-	(v=INT) | (c=INT '.' d=INT);
+	':' ('min' min=STRING) & ('max' max=STRING);

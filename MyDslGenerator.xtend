@@ -25,12 +25,32 @@ class MyDslGenerator extends AbstractGenerator {
 		var result=''
 		var tree = resource.allContents.toIterable.filter(Tree).get(0)
 		if (tree.type == 'apple') {
-			result+=''
+			result+='module random_apple_tree(tree_size=50, branch_levels=5, first=true, tree_color="sienna", roots_bool=true, scale_width_min_random=8, scale_width_max_random=12, branches_per_level=4, min_x=0, max_x=70, min_y=-180, max_y=180, scale_branch_min_random=0.6, scale_branch_max_random=0.8, add_apples_on_the_ground=true, add_apples_on_the_leaves=true, number_of_apples_on_the_ground=10, number_of_apples_on_the_leaf=3, fruit_color="red", leaf_color="green", min_max_factor=0.8) { if (roots_bool && first) { roots(tree_size, tree_color, add_apples_on_the_ground, number_of_apples_on_the_ground, fruit_color); } if (branch_levels > 0) { scale_width = rands(scale_width_min_random,scale_width_max_random,1)[0]; bottom_width = tree_size/scale_width; top_width = tree_size/(scale_width+2); color(tree_color) cylinder(r1=bottom_width, r2=top_width, h=tree_size, $fn=24); translate([0,0,tree_size]) { for(i=[0:branches_per_level-1]) { x_rotation = rands(min_x,max_x,1)[0]; z_rotation = rands(min_y,max_y,1)[0]; scale = rands(scale_branch_min_random,scale_branch_max_random,1)[0]; rotate([x_rotation,0,z_rotation]) random_apple_tree(scale*tree_size, branch_levels-1, false); } } } else { leaves(tree_size, leaf_color, fruit_color, add_apples_on_the_leaves, min_max_factor); } } module roots(root_size, root_color, add_apples_on_the_ground, number_of_apples_on_the_ground, fruit_color) { color(root_color) cylinder(r1=root_size/5, r2=0, h=root_size/7, $fn=5); if (add_apples_on_the_ground) { ground_apples(root_size, number_of_apples_on_the_ground, fruit_color); } } module leaves(leaf_size, leaf_color, fruit_color, add_apples_on_the_leaves, min_max_factor) { color(leaf_color) sphere(r=leaf_size, $fn=50); if (add_apples_on_the_leaves) { apples(leaf_size, 3, fruit_color, min_max_factor); } } module apples(apple_distribution_size, num, fruit_color, min_max_factor) { for (i=[1:num]) { x_translation = apple_distribution_size*rands(-min_max_factor,min_max_factor,1)[0]; y_translation = apple_distribution_size*rands(-min_max_factor,min_max_factor,1)[0]; z_translation = apple_distribution_size*rands(-min_max_factor,min_max_factor,1)[0]; color(fruit_color) translate([x_translation,y_translation,z_translation]) sphere(r=1, $fn=24); } } module ground_apples(distribution, num, fruit_color) { for (i=[1:num]) { x_translation = rands(-distribution,distribution,1)[0]; y_translation = rands(-distribution,distribution,1)[0]; color(fruit_color) translate([x_translation,y_translation,0]) sphere(r=1, $fn=24); } }\n'
+			result+='random_apple_tree(' + tree.size + ',';
+			result+=tree.branchLevels + ',true,';
+			result+='"' + tree.color + '",';
+			result+=(tree.roots=='enable'?'true':'false') + ',';
+			result+=tree.branch.branchWidth.minMax.min + ',';
+			result+=tree.branch.branchWidth.minMax.max + ',';
+			result+=tree.branch.numberOfBranches + ',';
+			result+=tree.branch.branchRotation.XBranchRotation.minMax.max + ',';
+			result+=tree.branch.branchRotation.XBranchRotation.minMax.min + ',';
+			result+=tree.branch.branchRotation.YBranchRotation.minMax.min + ',';
+			result+=tree.branch.branchRotation.YBranchRotation.minMax.max + ',';
+			result+=tree.branch.branchScale.minMax.min + ',';
+			result+=tree.branch.branchScale.minMax.max + ',';
+			result+=(tree.groundFruit.enableDisableGroundFruit=='enable'?'true':'false') + ',';
+			result+=(tree.leaves.leavesFruit.enableDisableFruit=='enable'?'true':'false') + ',';
+			result+=tree.groundFruit.groundFruitAmount + ',';
+			result+=tree.leaves.leavesFruit.leavesFruitAmount.minMax.min + ',';
+			result+='"' + tree.leaves.leavesFruit.leavesFruitColor + '",';
+			result+='"' + tree.leaves.leavesColor + '",';
+			result+=tree.leaves.leavesFruit.leavesFruitPositionRange.minMax.min + ');';
 		} else if (tree.type == 'coconut') {
 			
 		} else if (tree.type == 'fir') {
 			
 		}
-		fsa.generateFile('generatedfile.scad', result)
+		fsa.generateFile(tree.id + '.scad', result)
 	}
 }

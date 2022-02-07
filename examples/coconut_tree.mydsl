@@ -1,0 +1,31 @@
+tree coconut_tree:
+  type coconut
+  leaves:
+    enable
+    rotation:
+      x:
+        min '30'
+        max '30'
+    fruit:
+      enable
+      positionRange:
+        min '0'
+        max '360'
+      amount:
+        min '10'
+        max '10'
+      color saddlebrown
+    color green
+  groundFruit:
+    enable
+    color saddlebrown
+    amount '10'
+  color tan
+  size '40'
+  branch:
+    numberOfBranches '20'
+    rotation:
+      x:
+        min '0'
+        max '360'
+  branchLevels '15'

@@ -1,0 +1,38 @@
+tree fir_tree:
+  type fir
+  leaves:
+    enable
+    rotation:
+      x:
+        min '80'
+        max '80'
+      y:
+        min '0'
+        max '0'
+    fruit:
+      enable
+      positionRange:
+        min '50'
+        max '0'
+      amount:
+        min '1'
+        max '1'
+      color brown
+    color green
+    leafLevels '10'
+    numberOfLeaves:
+      min '7'
+      max '7'
+  color burlywood
+  size '50'
+  roots enable
+  branch:
+    numberOfBranches '15'
+    rotation:
+      x:
+        min '100'
+        max '100'
+      y:
+        min '0'
+        max '0'
+  branchLevels '15'

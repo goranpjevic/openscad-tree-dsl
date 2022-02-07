@@ -47,9 +47,44 @@ class MyDslGenerator extends AbstractGenerator {
 			result+='"' + tree.leaves.leavesColor + '",';
 			result+=tree.leaves.leavesFruit.leavesFruitPositionRange.minMax.min + ');';
 		} else if (tree.type == 'coconut') {
-			
+			result+='module random_coconut_tree(tree_size=40, num_branch=20, num_coconuts=10, tree_color="tan", add_coconuts_to_the_ground=true, add_coconuts_to_the_leaves=true, min_random_leaf_rotation=0, max_random_leaf_rotation=360, branch_color="green", number_of_leaf_levels=15, leaf_color="green", leaf_rotation=30, coconut_color="saddlebrown", coconut_min_random_angle=0, coconut_max_random_angle=360) { color(tree_color) cylinder(r1=tree_size/90, r2=tree_size/100, h=tree_size, $fn=24); translate([0,0,tree_size]) { for (i=[0:num_branch]) { angles = rands(min_random_leaf_rotation,max_random_leaf_rotation,3); rotate([angles[0],angles[1],angles[2]]) { branch(tree_size, branch_color, number_of_leaf_levels, leaf_color, leaf_rotation); } } if (add_coconuts_to_the_leaves) { for(i=[0:num_coconuts]) { coconuts(tree_size, coconut_color, coconut_min_random_angle, coconut_max_random_angle); } } } if (add_coconuts_to_the_ground) { ground_coconuts(tree_size, num_coconuts/10, coconut_color); } } module branch(branch_size, branch_color, number_of_leaf_levels, leaf_color, leaf_rotation) { color(branch_color) cylinder(r=branch_size/500, h=branch_size/3); leaves(branch_size/3, number_of_leaf_levels, leaf_color, leaf_rotation); } module leaves(leaf_size, number_of_leaf_levels, leaf_color, leaf_rotation) { for (i=[1:number_of_leaf_levels]) { color(leaf_color) translate([0,0,(leaf_size/number_of_leaf_levels)*i]) { rotate([leaf_rotation,0,0]) { cylinder(r=leaf_size/300, h=leaf_size/3); } rotate([-leaf_rotation,0,0]) { cylinder(r=leaf_size/300, h=leaf_size/3); } } } } module coconuts(coconut_size, coconut_color, coconut_min_random_angle, coconut_max_random_angle) { angles = rands(coconut_min_random_angle,coconut_max_random_angle,3); rotate([angles[0],angles[1],angles[2]]) { translate([0,0,coconut_size/20]) { color(coconut_color) sphere(coconut_size/30); } } } module ground_coconuts(tree_size, num, coconut_color) { coconut_size=tree_size/30; translate([0,0,coconut_size/2]) { for (i=[0:num]) { locations = rands(-tree_size/3,tree_size/3,2); translate([locations[0],locations[1],0]) { color(coconut_color) sphere(tree_size/30); } } } }\n'
+			result+='random_coconut_tree(' + tree.size + ','
+			result+=tree.branch.numberOfBranches + ','
+			result+=tree.leaves.leavesFruit.leavesFruitAmount.minMax.min + ','
+			result+='"' + tree.color + '",'
+			result+=(tree.groundFruit.enableDisableGroundFruit=='enable'?'true':'false') + ','
+			result+=(tree.leaves.leavesFruit.enableDisableFruit=='enable'?'true':'false') + ','
+			result+=tree.branch.branchRotation.XBranchRotation.minMax.min + ','
+			result+=tree.branch.branchRotation.XBranchRotation.minMax.max + ','
+			result+='"' + tree.leaves.leavesColor + '",'
+			result+=tree.branchLevels + ','
+			result+='"' + tree.leaves.leavesColor + '",'
+			result+=tree.leaves.leavesRotation.XLeavesRotationValue.minMax.min + ','
+			result+='"' + tree.leaves.leavesFruit.leavesFruitColor + '",';
+			result+=tree.leaves.leavesFruit.leavesFruitPositionRange.minMax.min + ','
+			result+=tree.leaves.leavesFruit.leavesFruitPositionRange.minMax.max + ');'
 		} else if (tree.type == 'fir') {
-			
+			result+='module fir_tree(tree_size=50, tree_color="burlywood", add_roots=true, number_of_branch_levels=15, number_of_branches_on_level=15, branch_color="burlywood", x_branch_rotation=100, y_branch_rotation=0, add_cones=true, min_random_cones=1, number_of_needle_levels=10, number_of_needles_per_level=7, x_needle_rotation=80, y_needle_rotation=0, needle_color="green", root_color="burlywood", x_cone_rotation=50, y_cone_rotation=0, z_cone_rotation=0, cone_color="brown") { color(tree_color) cylinder(r1=tree_size/30, r2=tree_size/50, h=tree_size, $fn=24); if (add_roots) { roots(tree_size, root_color); } for (i=[1:number_of_branch_levels]) { translate([0,0,(tree_size/number_of_branch_levels)*i]) { branches(tree_size, i, number_of_branches_on_level, branch_color, x_branch_rotation, y_branch_rotation, add_cones, min_random_cones, number_of_needle_levels, number_of_needles_per_level, x_needle_rotation, y_needle_rotation, needle_color, x_cone_rotation, y_cone_rotation, z_cone_rotation, cone_color); } } } module branches(branch_size, level, number_of_branches_on_level, branch_color, x_branch_rotation, y_branch_rotation, add_cones, min_random_cones, number_of_needle_levels, number_of_needles_per_level, x_needle_rotation, y_needle_rotation, needle_color, x_cone_rotation, y_cone_rotation, z_cone_rotation, cone_color) { for (i=[0:number_of_branches_on_level]) { rotate([x_branch_rotation,y_branch_rotation,i*(360/number_of_branches_on_level)]) { length_of_branch = (branch_size/3)-(level*(branch_size/50)); color(branch_color) cylinder(r=branch_size/200, h=length_of_branch, $fn=24); needles(branch_size, level, length_of_branch, number_of_needle_levels, number_of_needles_per_level, x_needle_rotation, y_needle_rotation, needle_color); if (add_cones) { number_of_cones = rands(min_random_cones,number_of_branches_on_level/level,1)[0]; cones(number_of_cones, length_of_branch, branch_size, x_cone_rotation, y_cone_rotation, z_cone_rotation, cone_color); } } } } module needles(needle_size, level, length_of_branch, number_of_needle_levels, number_of_needles_per_level, x_needle_rotation, y_needle_rotation, needle_color) { for (j=[0:number_of_needle_levels]) { for (i=[0:number_of_needles_per_level]) { translate([0,0,(length_of_branch/number_of_needle_levels)*j]) { rotate([x_needle_rotation,y_needle_rotation,i*(360/number_of_needles_per_level)]) { length_of_needles=13*needle_size/450; color(needle_color) cylinder(r=needle_size/500, h=length_of_needles, $fn=24); } } } } } module roots(root_size, root_color) { color(root_color) cylinder(r1=root_size/13, r2=0, h=root_size/10, $fn=5); } module cones(num, length_of_branch, cone_size, x_cone_rotation, y_cone_rotation, z_cone_rotation, cone_color) { for (i=[1:num]) { translate([0,0,(length_of_branch/num)*i]) { rotate([x_cone_rotation,y_cone_rotation,z_cone_rotation]) { color(cone_color) cylinder(r=cone_size/300, h=cone_size/70, $fn=20); } } } }\n'
+			result+='fir_tree(' + tree.size + ','
+			result+='"' + tree.color + '",'
+			result+=(tree.roots=='enable'?'true':'false') + ',';
+			result+=tree.branchLevels + ','
+			result+=tree.branch.numberOfBranches + ',';
+			result+='"' + tree.color + '",'
+			result+=tree.branch.branchRotation.XBranchRotation.minMax.min + ','
+			result+=tree.branch.branchRotation.YBranchRotation.minMax.min + ','
+			result+=(tree.leaves.leavesFruit.enableDisableFruit=='enable'?'true':'false') + ','
+			result+=tree.leaves.leavesFruit.leavesFruitAmount.minMax.min + ','
+			result+=tree.leaves.leafLevels + ','
+			result+=tree.leaves.numberOfLeaves.minMax.min + ',';
+			result+=tree.leaves.leavesRotation.XLeavesRotationValue.minMax.min + ','
+			result+=tree.leaves.leavesRotation.YLeavesRotationValue.minMax.min + ','
+			result+='"' + tree.leaves.leavesColor + '",'
+			result+='"' + tree.color + '",'
+			result+=tree.leaves.leavesFruit.leavesFruitPositionRange.minMax.max + ','
+			result+=tree.leaves.leavesFruit.leavesFruitPositionRange.minMax.min + ','
+			result+=tree.leaves.leavesFruit.leavesFruitPositionRange.minMax.min + ','
+			result+='"' + tree.leaves.leavesFruit.leavesFruitColor + '");';
 		}
 		fsa.generateFile(tree.id + '.scad', result)
 	}

@@ -22,10 +22,11 @@ Type:
 Leaves:
 	(enableDisableLeaves=EnableDisable) & ('rotation:'
 	leavesRotation=LeavesRotation) & ('fruit:' leavesFruit=LeavesFruit)
-	& ('color' leavesColor=Color);
+	& ('color' leavesColor=Color) & ('leafLevels' leafLevels=STRING)? &
+	('numberOfLeaves' numberOfLeaves=Value)?;
 LeavesRotation:
-	('x' xLeavesRotationValue=Value) & ('y' yLeavesRotationValue=Value)
-	('z' & zLeavesRotationValue=Value);
+	('x' xLeavesRotationValue=Value) & ('y' yLeavesRotationValue=Value)?
+	('z' & zLeavesRotationValue=Value)?;
 LeavesFruit:
 	(enableDisableFruit=EnableDisable) & ('positionRange'
 	leavesFruitPositionRange=Value) & ('amount'
@@ -39,11 +40,11 @@ GroundFruit:
 EnableDisable:
 	'enable' | 'disable';
 Branch:
-	('numberOfBranches' numberOfBranches=STRING) & ('width'
-	branchWidth=Value) & ('scale' branchScale=Value) & ('rotation:'
+	('numberOfBranches' numberOfBranches=STRING)? & ('width'
+	branchWidth=Value)? & ('scale' branchScale=Value)? & ('rotation:'
 	branchRotation=BranchRotation);
 BranchRotation:
-	('x' xBranchRotation=Value) & ('y' yBranchRotation=Value);
+	('x' xBranchRotation=Value) & ('y' yBranchRotation=Value)?;
 Value:
 	(minMax=MinMax);
 MinMax:

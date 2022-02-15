@@ -26,9 +26,9 @@ public class MyDslValidator extends AbstractMyDslValidator {
 //	}
 	
 	@Check
-	public void checkIdNotEmpty(Tree tree) {
-		if (tree.getId().isEmpty()) {
-			warning("ID cannot be empty", tree, MyDslPackage.Literals.TREE__ID);
+	public void checkBranchLevelsEmpty(Tree tree) {
+		if (tree.getBranchLevels().isBlank()) {
+			warning("the number of branch levels must be specified", tree, MyDslPackage.Literals.TREE__BRANCH_LEVELS);
 		}
 	}
 	

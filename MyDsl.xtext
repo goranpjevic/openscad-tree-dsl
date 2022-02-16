@@ -19,33 +19,33 @@ Model: {Tree}
 	('treeWidthScale:' treeWidthScale=Value)?);
 Type:
 	'apple' | 'coconut' | 'fir';
-Leaves:
-	(enableDisableLeaves=EnableDisable) & ('rotation:'
+Leaves: {Leaves}
+	((enableDisableLeaves=EnableDisable) & ('rotation:'
 	leavesRotation=LeavesRotation) & ('fruit:' leavesFruit=LeavesFruit)
 	& ('color' leavesColor=Color) & ('leafLevels' leafLevels=STRING)? &
-	('numberOfLeaves' numberOfLeaves=Value)?;
-LeavesRotation:
-	('x' xLeavesRotationValue=Value) & ('y' yLeavesRotationValue=Value)?
-	('z' & zLeavesRotationValue=Value)?;
-LeavesFruit:
-	(enableDisableFruit=EnableDisable) & ('positionRange'
+	('numberOfLeaves' numberOfLeaves=Value)?);
+LeavesRotation: {LeavesRotation}
+	(('x' xLeavesRotationValue=Value) & ('y' yLeavesRotationValue=Value)?
+	('z' & zLeavesRotationValue=Value)?);
+LeavesFruit: {LeavesFruit}
+	((enableDisableFruit=EnableDisable) & ('positionRange'
 	leavesFruitPositionRange=Value) & ('amount'
-	leavesFruitAmount=Value) & ('color' leavesFruitColor=Color);
+	leavesFruitAmount=Value) & ('color' leavesFruitColor=Color));
 Color:
 	'burlywood' | 'saddlebrown' | 'green' | 'sienna' | 'red' | 'brown'
 	| 'tan';
-GroundFruit:
-	(enableDisableGroundFruit=EnableDisable) & ('color'
-	groundFruitColor=Color) & ('amount' groundFruitAmount=STRING);
+GroundFruit: {GroundFruit}
+	((enableDisableGroundFruit=EnableDisable) & ('color'
+	groundFruitColor=Color) & ('amount' groundFruitAmount=STRING));
 EnableDisable:
 	'enable' | 'disable';
-Branch:
-	('numberOfBranches' numberOfBranches=STRING)? & ('width'
+Branch: {Branch}
+	(('numberOfBranches' numberOfBranches=STRING)? & ('width'
 	branchWidth=Value)? & ('scale' branchScale=Value)? & ('rotation:'
-	branchRotation=BranchRotation);
-BranchRotation:
-	('x' xBranchRotation=Value) & ('y' yBranchRotation=Value)?;
-Value:
+	branchRotation=BranchRotation));
+BranchRotation: {BranchRotation}
+	(('x' xBranchRotation=Value) & ('y' yBranchRotation=Value)?);
+Value: {Value}
 	(minMax=MinMax);
 MinMax:
 	':' ('min' min=STRING) & ('max' max=STRING);
